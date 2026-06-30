@@ -1,0 +1,14 @@
+.env
+data/
+*.json
+*.jpg
+*.png
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+logs/
+target/
+dbt_packages/
+.ipynb_checkpoints/
+*.db
