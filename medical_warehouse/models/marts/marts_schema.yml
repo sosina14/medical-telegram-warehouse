@@ -1,0 +1,39 @@
+version: 2
+models:
+  - name: dim_channels
+    description: "One row per Telegram channel."
+    columns:
+      - name: channel_key
+        tests: [unique, not_null]
+      - name: channel_name
+        tests: [unique, not_null]
+      - name: channel_type
+        tests:
+          - accepted_values:
+              values: ["Pharmaceutical", "Cosmetics", "Medical"]
+
+  - name: dim_dates
+    description: "Calendar dimension."
+    columns:
+      - name: date_key
+        tests: [unique, not_null]
+      - name: full_date
+        tests: [not_null]
+
+  - name: fct_messages
+    description: "One row per Telegram message."
+    columns:
+      - name: message_id
+        tests: [unique, not_null]
+      - name: channel_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_channels')
+              field: channel_key
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
